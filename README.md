@@ -66,7 +66,7 @@ Este dataset foi utilizado como base para as etapas de pré-processamento, vetor
 | Me sinto tão sozinho e perdido.       | tristeza  |
 | Tenho uma prova amanhã e estou tenso. | ansiedade |
 
-🔗 
+🔗 [Ver script de criação do dataset](./final_project/dataset_emocoes.py)
 
 ---
 
