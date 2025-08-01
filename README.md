@@ -97,13 +97,18 @@ Todo o desenvolvimento foi realizado com foco em criar um pipeline robusto e efi
 
 ---
 
-## 📌 Conclusão
+## 📷 Imagens do Resultado
 
-Este projeto me proporcionou uma experiência prática essencial na modelagem, criação e manipulação de bancos de dados relacionais. A simulação de um sistema real de um Hospital Veterinário exigiu atenção a detalhes como integridade referencial, organização de dados e clareza na consulta das informações. Tenho como planejamento e objetivo futuro de implementar uma interface gráfica para esse projeto :)   
+A seguir, algumas capturas de tela que ilustram o funcionamento do projeto e os resultados obtidos após o treinamento do modelo de Inteligência Artificial para análise de sentimentos:
 
-<p align="center">
-  <img src="assets/dog.png" width="100" height="100" style="border-radius: 50%;"/>
-</p>
+### DataSet "Emoções":
+![Código DataSet](./final_project/codigo_dataset.png)
+
+### Script Inteligência Artificial:
+![Código IA](./final_project/codigo_IA_previsão.png)
+
+### Exemplo de Funcionamento da Saída: 
+![Resultado da Saída](./final_project/"")
 
 ---
 
