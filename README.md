@@ -70,119 +70,31 @@ Este dataset foi utilizado como base para as etapas de pré-processamento, vetor
 
 ---
 
-## 🫵 Desafio 
+## 🧑🏽‍💻 Criação do Script de Definição e Treino da Inteligência Artificial
 
-A apresentação do projeto contou com 3 desafios propostos pelo professor orientador para avaliação do sistema, foram eles: 
+Nesta etapa, foi desenvolvido o script responsável por toda a lógica de definição, pré-processamento e treinamento do modelo de Inteligência Artificial para análise de sentimentos.
 
-1) Inserir uma view de tabela temporária com JOINs;
-2) Inserir triggers para controle da operação UPDATE em qualquer tabela;
-3) Inserir um Stored Procedure que receba uma inserção em uma tabela e retorne o ID do dado inserido.
+O script contempla as seguintes etapas principais:
 
-Cada desafio foi resolvido com os seguintes códigos:
+- **Carregamento do dataset** "Emoções", que contém frases rotuladas com as emoções correspondentes (alegria, tristeza, raiva e ansiedade).
 
-1) Inserir uma view de tabela temporária com JOINs;
+- **Pré-processamento dos dados**, incluindo:  
+  - Limpeza textual (remoção de pontuação, caracteres especiais e conversão para caixa baixa).  
+  - Tokenização das frases para fragmentar o texto em palavras.  
+  - Vetorização utilizando técnicas como TF-IDF para transformar texto em vetores numéricos compreensíveis pelo modelo.
 
-```
-SELECT
-    ag.data_hora,
-    t.nome AS tutor,
-    f.nome AS profissional,
-    ag.status
-FROM sistema.agenda ag
-JOIN sistema.tutores t ON ag.id_tutor = t.id_tutor
-JOIN sistema.funcionarios f ON ag.id_funcionario = f.id_funcionario
-ORDER BY ag.data_hora;
-```
-2) Inserir triggers para controle da operação UPDATE em qualquer tabela;
-```
-CREATE TABLE sistema.dia_consultas (
-data_hr	VARCHAR		NOT NULL,
-consultas_qt	NUMERIC);
-CREATE TABLE sistema.dia_consulta_controle(
-operacao	CHAR 		NOT NULL,
-usuario	    VARCHAR     NOT NULL,
-dt_hr	    TIMESTAMP	NOT NULL,
-data_hr	    VARCHAR	 	NOT NULL,
-consultas_qt     NUMERIC);
-CREATE OR REPLACE FUNCTION sistema.fn_dia_consulta_controle()
-RETURNS trigger AS
-$$
-	BEGIN
-    	IF(tg_op = 'UPDATE') THEN
-           	INSERT INTO sistema.dia_consulta_controle
-            SELECT 'A', user, now(),NEW.*;
-            RETURN NEW;
-        END IF;
-        RETURN NULL;                   
-    END
-$$
-LANGUAGE plpgsql;
-CREATE TRIGGER tg_controle_diaconsulta
-AFTER INSERT OR UPDATE OR DELETE ON sistema.dia_consultas
-FOR EACH ROW EXECUTE PROCEDURE sistema.fn_dia_consulta_controle();
+- **Definição do modelo de aprendizado supervisionado**, escolhendo algoritmos adequados para classificação de texto. No projeto, foi utilizado Multinomial, devido à sua eficácia em tarefas de NLP.
 
-select * from sistema.dia_consultas;
+- **Treinamento do modelo** com o dataset pré-processado, incluindo divisão dos dados em conjuntos de treino e teste para validação do desempenho.
 
-select * from sistema.dia_consulta_controle;
+- **Avaliação do modelo** utilizando métricas como acurácia, precisão, recall e F1-score, garantindo que o agente inteligente esteja apto a classificar corretamente os sentimentos nas frases.
 
-insert into sistema.dia_consultas(data_hr, consultas_qt)
-values  ('08/05/2025', 5),
-		('15/05/2025', 3),
-		('18/05/2025', 7),
-		('25/05/2025', 3),
-		('31/05/2025', 15);
-		
-update sistema.dia_consultas
-set data_hr = '10/05/2025' where consultas_qt = 5;
+- **Salvamento do modelo treinado** para uso posterior na aplicação prática, facilitando a reutilização sem necessidade de re-treinamento.
 
-update sistema.dia_consultas
-set data_hr = '01/06/25' where consultas_qt = 15;
-```
+Todo o desenvolvimento foi realizado com foco em criar um pipeline robusto e eficiente para o reconhecimento de emoções em texto, aplicando os conceitos aprendidos durante a formação em Inteligência Artificial da Alura.
 
-3) Inserir um Stored Procedure que receba uma inserção em uma tabela e retorne o ID do dado inserido:
-```
-CREATE OR REPLACE FUNCTION sistema.fn_return_insertedid(
-    p_nome VARCHAR,
-    p_telefone VARCHAR,
-    p_email VARCHAR,
-    p_endereco VARCHAR
-) RETURNS INTEGER AS
-$$
-DECLARE 
-    t_id sistema.tutores.id_tutor%TYPE;
-BEGIN
-    INSERT INTO sistema.tutores (nome, telefone, email, endereco)
-    VALUES (p_nome, p_telefone, p_email, p_endereco)
-    RETURNING id_tutor INTO t_id;
+🔗 [Ver script de criação do dataset](./final_project/dataset_emocoes.py)
 
-    RETURN t_id;
-END;
-$$
-LANGUAGE plpgsql;
-
-
-SELECT sistema.fn_return_insertedid(
-    'Rafinha Santos',
-    '(11) 98765-4321',
-    'rafinha@logomail.com',
-    'Rua das Flores, 123'
-);
-
-
-SELECT sistema.fn_return_insertedid(
-    'Luca Braga',
-    '(11)1234-2314',
-    'lucabraga@gmail.com',
-    'Rua das Acacias, 4356'
-);
-
-SELECT sistema.fn_return_insertedid(
-    'Rony',
-    '(11)43414',
-    'rony@gmail.com',
-    'Rua das Acacias, 213'
-);
-```
 ---
 
 ## 📌 Conclusão
