@@ -34,102 +34,39 @@ natural (NLP), entre outros.
 
 ## 📂 Estrutura do Repositório
 
-- `/sql/`: Scripts SQL de criação e manipulação do Banco "Hospital Veterinário"
-- `/diagrama/`: Diagrama de Lógica e Planejamento
-- `/assets/`: Imagens utilizadas no arquivo README.md
+- `/final_project/`: Arquivos de código do projeto final desenvolvido
+- `/fundamentos_IA/`: Arquivos de código de atividades propostas durante o curso de fundamentos da inteligência artificial
+- `/machine_learning/`: Arquivos de código de atividades propostas durante o curso de Machine Learning
 - `README.md`: Este arquivo
+  
+---
 
+## 💭 Planejamento de Projeto
+
+Ao concluir a formação "Fundamentos do Mundo da Inteligência Artificial" da Alura, desenvolvi um agente inteligente utilizando a abordagem de aprendizado supervisionado, aplicando na prática os principais conceitos estudados ao longo do curso.
+
+A ideia central do projeto foi criar uma Inteligência Artificial capaz de receber uma frase como input e identificar o sentimento humano associado a ela, classificando-o entre alegria, tristeza, raiva ou ansiedade. O modelo foi treinado com um conjunto de dados rotulado, desenvolvido manualmente para o projeto, utilizando técnicas de Processamento de Linguagem Natural (NLP) e classificação de texto.
 
 ---
 
-## 💭 Planejamento de Criação
+## 🧑🏽‍💻 Criação do DataSet "Emoções"
 
-- Antes da implementação do Banco de Dados, utilizei a ferramenta Draw.io para esquematizar a lógica de funcionamento do Hospital Veterinário e planejar as tabelas necessárias para o desenvolvimento deste projeto:
+O ponto de partida do projeto foi a criação de um dataset personalizado, nomeado "Emoções", composto por frases rotuladas de acordo com a emoção expressa: alegria, tristeza, raiva ou ansiedade.
 
-![Esquemático do Sistema](assets/esquemático.jpeg)
+Cada entrada do conjunto de dados representa uma frase associada a uma dessas emoções, permitindo o treinamento supervisionado do modelo. A construção manual do dataset foi essencial para garantir exemplos realistas e relevantes, promovendo um aprendizado mais eficaz por parte da IA.
 
----
+Este dataset foi utilizado como base para as etapas de pré-processamento, vetorização e treinamento do classificador.
 
-## 🧑🏽‍💻 CRIANDO O SCRIPT SQL
+## 📝 Exemplo de dados
 
-- O projeto é iniciado com a criação de um schema chamado "sistema" para a otimização de alguns pontos, principalmente para os ids, e suas sequences dentro do schema: 
-```
--- CRIANDO SCHEMA E SEQUENCES PARA AUTOMATIZAR OS IDS NECESSÁRIOS --
+| Frase                                 | Emoção    |
+| ------------------------------------- | --------- |
+| Hoje o dia está incrível!             | alegria   |
+| Não aguento mais essa situação.       | raiva     |
+| Me sinto tão sozinho e perdido.       | tristeza  |
+| Tenho uma prova amanhã e estou tenso. | ansiedade |
 
-CREATE SCHEMA sistema;
-
-CREATE SEQUENCE sistema.tb_tutores_id_seq START 1;
-CREATE SEQUENCE sistema.tb_animais_id_seq START 1;
-CREATE SEQUENCE sistema.tb_funcionarios_id_seq START 1;
-.
-.
-.
-    Outras Sequences...
-```
-
-- Após a criação das sequences e do esquema, faço a criação das tabelas: 
-
-```
--- CRIANDO TABELAS DO BANCO DE DADOS - HOSPITAL VETERINÁRIO --
-
-
-CREATE TABLE sistema.tutores
-(
-	id_tutor	INTEGER 		PRIMARY KEY				default nextval('sistema.tb_tutores_id_seq'),
-	nome 		VARCHAR(32) 	constraint nn_nome 		not null,
-	telefone 	VARCHAR(20)		constraint nn_telefone	not null,
-	email		VARCHAR(32)		constraint nn_email 	not null,
-	endereco	VARCHAR(32)		constraint nn_endereco	not null
-);
-.
-.
-.
-    Outras tabelas...
-```
-- Após a criação das tabelas, foi o momento de povoar as tabelas. Para me inspirar a criar as tabelas, solicitei ao ChatGPT que me apresentasse algumas situações de atendimento para o Hospital Veterinário e assim, fui colocando as propostas em prática dentro do meu script:
-
-*Exemplo proposto pelo ChatGPT:
-"O tutor Paulo levou sua tartaruga Tuca ao hospital veterinário após notar uma rachadura no casco. A Dra. Renata examinou e recomendou limpeza, pomada cicatrizante e observação. Serviço de curativo aplicado e prescrição de medicamentos tópicos."*
-
-```sql
-INSERT INTO sistema.tutores (nome, telefone, email, endereco)
-VALUES ('Paulo Henrique da Mata', '(62)91234-5566', 'paulo.h.mata@gmail.com', 'Rua das Águas, 99 - Centro');
-
-INSERT INTO sistema.animais (nome, especie, raca, idade, peso, id_tutor)
-VALUES ('Tuca', 'Réptil', 'Tartaruga Tigre-d’água', 5, 2,
-       (SELECT id_tutor FROM sistema.tutores WHERE nome = 'Paulo Henrique da Mata'));
-	   
-INSERT INTO sistema.funcionarios (nome, funcao, telefone, salario)
-VALUES ('Renata Oliveira Santos', 'Veterinária de Silvestres', '(62)99876-3344', 'R$ 7.500,00');
-.
-.
-. 
-    Mais inserts...
-```
-
-- Por fim, foi implementado no script alguns selects para visualização de resultados que fossem satisfatórios e úteis para o usuário no Hospital Veterinário, como: 
-
-```sql
--- # Select Visualização - Nome do animal, nome do tutor, nome do profissional que 
-atendeu, data e horario de atendimento, observacoes, serviço e quantidade de serviços! # --
-
-SELECT
-    a.nome AS nome_animal,
-    t.nome AS tutor,
-    f.nome AS profissional_atendente,
-    c.data_horario,
-    c.observacoes,
-    s.descricao AS servico,
-    cs.quantidade
-FROM sistema.consulta c
-JOIN sistema.animais a ON c.id_animal = a.id_animal
-JOIN sistema.tutores t ON a.id_tutor = t.id_tutor
-JOIN sistema.funcionarios f ON c.id_funcionario = f.id_funcionario
-JOIN sistema.consulta_servico cs ON c.id_consulta = cs.id_consulta
-JOIN sistema.servico s ON cs.id_servico = s.id_servico
-ORDER BY c.data_horario DESC NULLS LAST;
-```
----
+🔗 
 
 ---
 
