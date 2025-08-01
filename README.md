@@ -102,16 +102,23 @@ Todo o desenvolvimento foi realizado com foco em criar um pipeline robusto e efi
 A seguir, algumas capturas de tela que ilustram o funcionamento do projeto e os resultados obtidos após o treinamento do modelo de Inteligência Artificial para análise de sentimentos:
 
 ### DataSet "Emoções":
-![Código DataSet](./final_project/codigo_dataset.png)
+![Código DataSet](./final_project/Imagens_Projeto/codigo_dataset.png)
 
 ### Script Inteligência Artificial:
-![Código IA](./final_project/codigo_IA_previsão.png)
+![Código IA](./final_project/Imagens_Projeto/codigo_IA_previsão.png)
 
 ### Exemplo de Funcionamento da Saída: 
-![Resultado da Saída](./final_project/"")
+![Resultado da Saída](./final_project/Imagens_Projeto/Resultado_Saída.png)
 
 ---
 
+## 🚀 Conclusão
+
+Neste projeto, apliquei os conhecimentos adquiridos na formação "Fundamentos do Mundo da Inteligência Artificial" da Alura para desenvolver uma solução prática de análise de sentimentos baseada em processamento de linguagem natural (NLP) e aprendizado supervisionado. Desde a criação do dataset personalizado até a definição, treinamento e avaliação do modelo, todo o processo reforçou conceitos essenciais de inteligência artificial e mostrou a importância de um pipeline bem estruturado para obter resultados eficazes.
+
+O agente inteligente desenvolvido conseguiu identificar emoções em frases com uma boa taxa de precisão, demonstrando o potencial de aplicações reais na área de análise de sentimentos. Esse projeto representa não apenas a consolidação do aprendizado, mas também um ponto de partida para explorar técnicas mais avançadas e ampliar as funcionalidades da inteligência artificial em processamento textual.
+
+---
 ## 👤 Sobre o Autor
 
 Desenvolvido por **Vitor Henrique Carvalho de Morais**, estudante de Engenharia da Computação na **Universidade Federal de Uberlândia (UFU)**.
